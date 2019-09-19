@@ -252,7 +252,7 @@ static void kslog_write_newline()
 
 static void kslog_write_hex(const unsigned char* ptr, const int length)
 {
-    if(length <= 0)
+    if(ptr == NULL)
     {
         return;
     }
@@ -317,6 +317,10 @@ static void kslog_write_log_basic(
         // Prevents "unused function" warning for kslog_write_log().
         (void)kslog_write_log;
     }
+    if(binary_data != NULL)
+    {
+        write(KSLog_FileDesriptor, " ", 1);
+    }
     kslog_write_hex(binary_data, byte_count);
     kslog_write_newline();
 }
@@ -341,6 +345,10 @@ static void kslog_write_log(
 
         // Avoid "unused function" warning.
         (void)kslog_write_log_basic;
+    }
+    if(binary_data != NULL)
+    {
+        write(KSLog_FileDesriptor, " ", 1);
     }
     kslog_write_hex(binary_data, byte_count);
     kslog_write_newline();
